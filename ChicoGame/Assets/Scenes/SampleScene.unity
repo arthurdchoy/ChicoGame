@@ -4538,6 +4538,7 @@ GameObject:
   - component: {fileID: 1835151526}
   - component: {fileID: 1835151525}
   - component: {fileID: 1835151522}
+  - component: {fileID: 1835151528}
   m_Layer: 0
   m_Name: PlayerChar
   m_TagString: Untagged
@@ -4558,8 +4559,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.08188419, y: -1.295276}
-  m_Size: {x: 1.7760882, y: 0.53945357}
+  m_Offset: {x: 0.023489585, y: -0.73052764}
+  m_Size: {x: 0.693496, y: 0.28589925}
   m_Direction: 1
 --- !u!212 &1835151523
 SpriteRenderer:
@@ -4600,7 +4601,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1e90bdb48cd8ba149bd1cdc2a8888dc3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f363fe7d0fcf94b4d857435fc38c0559, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4619,8 +4620,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835151521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0.04, y: 0.38, z: -1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -4672,6 +4673,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1835151526}
-  animator: {fileID: 0}
-  runSpeed: 20
-  sprintBoost: 1.5
+  animator: {fileID: 1835151528}
+  runSpeed: 12
+  sprintBoost: 1.7
+--- !u!95 &1835151528
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835151521}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 00929d1b9bf2ac344a8db9e0e8dd9545, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
