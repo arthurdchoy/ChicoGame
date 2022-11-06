@@ -29,7 +29,8 @@ public class mc_Movement : MonoBehaviour
             verticalMove = Input.GetAxisRaw("Vertical") * runSpeed;
         }
 
-        animator.SetFloat("Speed", Mathf.Abs(horizontalMove+verticalMove));
+        animator.SetFloat("HSpeed", Mathf.Abs(horizontalMove));
+        animator.SetFloat("VSpeed", verticalMove);                  // no abs value because of differen up, down walk animations
 
 
     }

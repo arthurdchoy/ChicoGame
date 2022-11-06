@@ -6,7 +6,7 @@ public class CharacterController2D : MonoBehaviour
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
 
 	private Rigidbody2D m_Rigidbody2D;
-	private bool m_FacingRight = false;  // For determining which way the player is currently facing.
+	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 
 	private void Awake()
@@ -19,9 +19,9 @@ public class CharacterController2D : MonoBehaviour
 		Vector3 targetVelocity;
 
 		// Move the character by finding the target velocity
-		if (hmove != 0 && vmove != 0)
+		if (hmove != 0 && vmove != 0)	// character go slower when going diagonally
         {
-			targetVelocity = new Vector2(hmove * 7.5f, vmove * 7.5f);
+			targetVelocity = new Vector2(hmove * 6f, vmove * 6f);
         }
         else
         {
