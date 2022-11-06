@@ -7,6 +7,8 @@ public class CharacterController2D : MonoBehaviour
 
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+	private bool m_FacingUp = false;
+	private bool m_FacingDown = false;
 	private Vector3 m_Velocity = Vector3.zero;
 
 	private void Awake()
@@ -30,6 +32,22 @@ public class CharacterController2D : MonoBehaviour
 		// And then smoothing it out and applying it to the character
 		m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
+		if (vmove > 0 && hmove == 0)
+		{
+			m_FacingUp = true;
+			m_FacingDown = false;
+
+		}else if (vmove < 0 && hmove == 0)
+        {
+			m_FacingUp = false;
+			m_FacingDown = true;
+        }
+        else if(hmove != 0)
+        {
+			m_FacingUp = false;
+			m_FacingDown = false;
+		}
+
 		// If the input is moving the player right and the player is facing left...
 		if (hmove > 0 && !m_FacingRight)
 		{
@@ -45,10 +63,26 @@ public class CharacterController2D : MonoBehaviour
 
 	}
 
+	public bool FacingUp()
+    {
+		return m_FacingUp;
+    }
+	public bool FacingDown()
+	{
+		return m_FacingDown;
+	}
+	public bool FacingRight()
+	{
+		return m_FacingRight && !m_FacingUp && !m_FacingDown;
+	}
+	public bool FacingLeft()
+	{
+		return !m_FacingRight && !m_FacingUp && !m_FacingDown;
+	}
+
 
 	private void Flip()
 	{
-		// Switch the way the player is labelled as facing.
 		m_FacingRight = !m_FacingRight;
 
 		// Multiply the player's x local scale by -1.
