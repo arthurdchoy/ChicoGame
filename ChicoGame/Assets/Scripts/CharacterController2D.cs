@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class CharacterController2D : MonoBehaviour
@@ -9,6 +9,9 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private bool m_FacingUp = false;
 	private bool m_FacingDown = false;
+
+	public enum dir { UP, DOWN, RIGHT, LEFT };
+
 	private Vector3 m_Velocity = Vector3.zero;
 
 	private void Awake()
@@ -21,12 +24,12 @@ public class CharacterController2D : MonoBehaviour
 		Vector3 targetVelocity;
 
 		// Move the character by finding the target velocity
-		if (hmove != 0 && vmove != 0)	// character go slower when going diagonally
-        {
+		if (hmove != 0 && vmove != 0)   // character go slower when going diagonally
+		{
 			targetVelocity = new Vector2(hmove * 6f, vmove * 6f);
-        }
-        else
-        {
+		}
+		else
+		{
 			targetVelocity = new Vector2(hmove * 10f, vmove * 10f);
 		}
 		// And then smoothing it out and applying it to the character
@@ -37,13 +40,13 @@ public class CharacterController2D : MonoBehaviour
 			m_FacingUp = true;
 			m_FacingDown = false;
 
-		}else if (vmove < 0 && hmove == 0)
-        {
+		} else if (vmove < 0 && hmove == 0)
+		{
 			m_FacingUp = false;
 			m_FacingDown = true;
-        }
-        else if(hmove != 0)
-        {
+		}
+		else if (hmove != 0)
+		{
 			m_FacingUp = false;
 			m_FacingDown = false;
 		}
@@ -63,7 +66,14 @@ public class CharacterController2D : MonoBehaviour
 
 	}
 
-	public bool FacingUp()
+	public dir GetFacing() 
+	{
+		if(m_FacingUp) return dir.UP;
+		else if(m_FacingDown) return dir.DOWN;
+		else if(m_FacingRight) return dir.RIGHT;
+		return dir.LEFT;
+	}
+	/*public bool FacingUp()
     {
 		return m_FacingUp;
     }
@@ -78,7 +88,7 @@ public class CharacterController2D : MonoBehaviour
 	public bool FacingLeft()
 	{
 		return !m_FacingRight && !m_FacingUp && !m_FacingDown;
-	}
+	}*/
 
 
 	private void Flip()
