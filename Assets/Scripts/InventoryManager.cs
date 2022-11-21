@@ -93,6 +93,11 @@ public class InventoryManager : MonoBehaviour
         return true;
 
     }
+
+    public (InventoryItem item, int count) GetItemAt(int index)
+    {
+        return itemList[index];
+    }
     
     bool FullInventory()
     {
