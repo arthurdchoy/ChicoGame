@@ -9,6 +9,7 @@ public class InteractionManager : MonoBehaviour
     // Player character and cursor object for calculation and visuals
     [SerializeField] GameObject player, cursor;
     public Tilemap tiles;   // Tilemap object for function calls
+    public Tile tile;       // Object for currently selected tile
 
     public Vector3Int location; // Selection location
     // Start is called before the first frame update
@@ -40,7 +41,12 @@ public class InteractionManager : MonoBehaviour
 
         // Place cursor onto selection location
         // (other additions to offset location to be in middle of tile, it's awful I know)
-        cursor.transform.position = tiles.CellToWorld(location) + tiles.CellToWorld(Vector3Int.down)/2 + tiles.CellToWorld(Vector3Int.right)/2;
+        Vector3 cursorXY = tiles.CellToWorld(location) + tiles.CellToWorld(Vector3Int.down)/2 + tiles.CellToWorld(Vector3Int.right)/2;
+        cursor.transform.position = new Vector3(cursorXY.x, cursorXY.y, -0.2f);
 
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+
+        }
     }
 }

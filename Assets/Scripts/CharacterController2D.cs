@@ -73,6 +73,11 @@ public class CharacterController2D : MonoBehaviour
 		else if(m_FacingRight) return dir.RIGHT;
 		return dir.LEFT;
 	}
+
+	public void GetTool()
+    {
+		return;
+    }
 	/*public bool FacingUp()
     {
 		return m_FacingUp;
