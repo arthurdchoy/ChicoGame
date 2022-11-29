@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62111a2af7955324e892a25fb8f1b4bd, type: 3}
   m_Name: pochigo
   m_EditorClassIdentifier: 
-  stackable: 1
   growthTime: 0
   progressSprites: []
   matureSprite: {fileID: 0}
