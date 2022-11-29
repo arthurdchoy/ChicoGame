@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class CropData : ScriptableObject, InventoryItem
 {
-    
     public bool stackable
     {
         get
@@ -33,5 +32,6 @@ public class CropData : ScriptableObject, InventoryItem
     public string type;
     public string description;
     public string[] crossbreed;
+    
     
 }

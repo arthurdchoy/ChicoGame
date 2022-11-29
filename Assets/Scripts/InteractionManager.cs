@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class InteractionManager : MonoBehaviour
 {
     // Player character and cursor object for calculation and visuals
-    [SerializeField] GameObject player, cursor;
+    [SerializeField] GameObject player, cursor, field;
     public Tilemap tiles;   // Tilemap object for function calls
     public Tile tile;       // Object for currently selected tile
 
@@ -46,7 +46,7 @@ public class InteractionManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-
+            field.GetComponent<FieldManager>().Interact(null, location);
         }
     }
 }
