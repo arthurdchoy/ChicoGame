@@ -9,15 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62111a2af7955324e892a25fb8f1b4bd, type: 3}
-  m_Name: pochigo
+  m_Script: {fileID: 11500000, guid: cac0846bf510ce543991ebf38c2426ed, type: 3}
+  m_Name: hammer
   m_EditorClassIdentifier: 
-  growthTime: 0
-  progressSprites: []
-  matureSprite: {fileID: 0}
-  icon: {fileID: 21300000, guid: 42f35ab25f27c124292965ca48a5b81f, type: 3}
-  buyPrice: 0
-  sellPrice: 0
-  type: fruit
+  icon: {fileID: 0}
+  state: 0
   description: 
-  crossbreed: []
