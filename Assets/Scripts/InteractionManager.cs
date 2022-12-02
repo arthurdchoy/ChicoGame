@@ -10,6 +10,8 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] GameObject player, cursor, field;
     public Tilemap tiles;   // Tilemap object for function calls
     public Tile tile;       // Object for currently selected tile
+    [SerializeField] InventoryManager inventoryManager;
+    private int currentItem = 0;
 
     public Vector3Int location; // Selection location
     // Start is called before the first frame update
@@ -44,9 +46,22 @@ public class InteractionManager : MonoBehaviour
         Vector3 cursorXY = tiles.CellToWorld(location) + tiles.CellToWorld(Vector3Int.down)/2 + tiles.CellToWorld(Vector3Int.right)/2;
         cursor.transform.position = new Vector3(cursorXY.x, cursorXY.y, -0.2f);
 
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            if (currentItem + 1 > inventoryManager.GetNumFilledSlots()) currentItem = 0;
+            else currentItem++;
+        }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            if (currentItem - 1 < 0) currentItem = inventoryManager.GetNumFilledSlots() - 1;
+            else currentItem--;
+        }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            field.GetComponent<FieldManager>().Interact(null, location);
+            Debug.Log(inventoryManager.GetNumFilledSlots() + " calling interact");
+            if (inventoryManager.GetNumFilledSlots() > 0) field.GetComponent<FieldManager>().Interact(inventoryManager.GetItemAt(currentItem).item, location);
         }
+
+        //if(inventoryManager.GetNumFilledSlots() > 0) Debug.Log(inventoryManager.GetItemAt(currentItem).item.ItemName);
     }
 }

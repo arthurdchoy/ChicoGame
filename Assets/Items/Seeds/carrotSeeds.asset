@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9414572be85512447a9a35a127d585e1, type: 3}
+  m_Name: carrotSeeds
+  m_EditorClassIdentifier: 
+  maxStackSize: 64
+  itemName: Carrot Seeds
+  icon: {fileID: 0}
+  buyPrice: 0
+  sellPrice: 0
+  type: seed
+  description: bless up
+  growthStageTimes: 000000000300000005000000
+  growthStageSprites:
+  - {fileID: -890280540533619199, guid: 2afd5f5fa2196d642b3d160a1a93f06c, type: 3}
+  - {fileID: 6679225720113002992, guid: 2afd5f5fa2196d642b3d160a1a93f06c, type: 3}
+  - {fileID: 7159567688333451186, guid: 2afd5f5fa2196d642b3d160a1a93f06c, type: 3}
