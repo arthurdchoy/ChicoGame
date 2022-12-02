@@ -4,16 +4,23 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "CropData", menuName = "New Crop")]
 
-public class CropData : ScriptableObject, InventoryItem
+public class CropData : ScriptableObject, IInventoryItem
 {
-    public bool stackable
+    public int MaxStackSize
     {
         get
         {
-            return true;
+            return maxStackSize;
         }
     }
-    public string itemName
+    public string ItemName
+    {
+        get
+        {
+            return itemName;
+        }
+    }
+    public string InternalName
     {
         get
         {
@@ -21,9 +28,12 @@ public class CropData : ScriptableObject, InventoryItem
         }
     }
 
-    public int growthTime;
-    public Sprite[] progressSprites;
-    public Sprite matureSprite;
+    public int maxStackSize;
+    public string itemName;
+
+    //public int growthTime;
+    //public Sprite[] progressSprites;
+    //public Sprite cropSprite;
     public Sprite icon;
 
     public int buyPrice;
@@ -31,7 +41,7 @@ public class CropData : ScriptableObject, InventoryItem
 
     public string type;
     public string description;
-    public string[] crossbreed;
+    //public string[] crossbreed;
     
     
 }

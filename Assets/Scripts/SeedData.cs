@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ToolData", menuName = "New Tool")]
+[CreateAssetMenu(fileName = "SeedData", menuName = "New Seed")]
 
-public class ToolData : ScriptableObject, IInventoryItem
+public class SeedData : ScriptableObject, IInventoryItem
 {
-    // Start is called before the first frame update
     public int MaxStackSize
     {
         get
         {
-            return maxStackSize;
+            return MaxStackSize;
         }
     }
     public string ItemName
@@ -29,11 +28,17 @@ public class ToolData : ScriptableObject, IInventoryItem
         }
     }
 
-    private int maxStackSize = 1;
+    public int maxStackSize;
     public string itemName;
 
     public Sprite icon;
-    public int state;
 
+    public int buyPrice;
+    public int sellPrice;
+
+    public string type;
     public string description;
+
+    public int[] growthStageTimes;
+    public Sprite[] growthStageSprites;
 }

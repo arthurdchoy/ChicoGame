@@ -8,19 +8,37 @@ public class InventoryManager : MonoBehaviour
     private int count = 0;     // number of used inventory slots
     
     // pos of item in list corresponds to their pos in inventory UI
-    private List<(InventoryItem item, int count)> itemList = new List<(InventoryItem item, int count)>(NUM_SLOTS);
+    private List<(IInventoryItem item, int amount)> itemList = new List<(IInventoryItem item, int amount)>(NUM_SLOTS);
+
+    public ScriptableObject[] startingItems;
 
     void Start()
     {
-        // for inserting items, inventory drap&drop feature
+        if (startingItems.Length > 0) {
+            for(int i = 0; i < startingItems.Length; i++)
+            {
+                if (startingItems[i] is ToolData) AddItem((IInventoryItem)startingItems[i], 1, false);
+                else if (startingItems[i] is SeedData) AddItem((IInventoryItem)startingItems[i], 64, false);
+                else if (startingItems[i] is CropData) AddItem((IInventoryItem)startingItems[i], 64, false);
+            }
+        }
+        // for inserting items, inventory drag&drop feature
         for(int i = 0; i < NUM_SLOTS; i++)
         {
             itemList.Add((null, 0));
         }
     }
+
+    public bool AddItem(IInventoryItem newItem, int amount, bool ugh)
+    {
+        Debug.Log("I am at my lowest point");
+        itemList.Add((newItem, amount));
+        count++;
+        return true;
+    }
     
     // return if item was added succesfully
-    public bool AddItem(InventoryItem newItem, int amount = 1)
+    public bool AddItem(IInventoryItem newItem, int amount)
     {
         if (FullInventory())
         {
@@ -31,7 +49,8 @@ public class InventoryManager : MonoBehaviour
         bool nullIndexFound = false;
         for (int i = 0; i < NUM_SLOTS; i++)
         {
-            if (itemList[i].item == null)
+            Debug.Log(count);
+            if (itemList.Count == 0 || itemList[i].item == null)
             {
                 if (!nullIndexFound)
                 {
@@ -41,28 +60,30 @@ public class InventoryManager : MonoBehaviour
                 continue;
             }
 
-            if (itemList[i].item.name == newItem.name && newItem.stackable)
+            if (itemList[i].item.ItemName == newItem.ItemName && newItem.MaxStackSize > 1)
             {
-                int newAmount = itemList[i].count + amount;
+                int newAmount = itemList[i].amount + amount;
                 itemList[i] = (newItem, newAmount);
                 count++;
                 return true;
             }
         }
-        itemList[firstNullIndex] = (newItem, amount);
+        itemList.Add((newItem, amount));
         count++;
         return true;
     }
 
     // insert item at specific inventory slot (for drap&drop)
     // return false if item cant be added
-    public bool AddItem(InventoryItem newItem, int amount, int index)
+    public bool AddItem(IInventoryItem newItem, int amount, int index)
     {
+        Debug.Log(index);
         if(itemList[index].item != null)
         {
-            if(itemList[index].item.name == newItem.name && itemList[index].item.stackable)
+            
+            if(itemList[index].item.ItemName == newItem.ItemName && itemList[index].item.MaxStackSize > 1)
             {
-                int newAmount = itemList[index].count + amount;
+                int newAmount = itemList[index].amount + amount;
                 itemList[index] = (newItem, newAmount);
                 count++;
                 return true;
@@ -78,25 +99,30 @@ public class InventoryManager : MonoBehaviour
     // amount is -1 when the full amount of the item at the index should be removed
     public bool RemoveItem(int index, int amount = -1)
     {
-        if(itemList[index].item == null && itemList[index].count < amount && amount != -1)
+        if(itemList[index].item == null && itemList[index].amount < amount && amount != -1)
         {
             return false;
         }
-        if(itemList[index].count == amount || amount == -1)
+        if(itemList[index].amount == amount || amount == -1)
         {
             itemList[index] = (null, 0);
             count--;
             return true;
         }
-        int newAmount = itemList[index].count - amount;
+        int newAmount = itemList[index].amount - amount;
         itemList[index] = (itemList[index].item, newAmount);
         return true;
 
     }
 
-    public (InventoryItem item, int count) GetItemAt(int index)
+    public (IInventoryItem item, int amount) GetItemAt(int index)
     {
         return itemList[index];
+    }
+
+    public int GetNumFilledSlots()
+    {
+        return count;
     }
     
     bool FullInventory()

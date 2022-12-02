@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
  using UnityEngine.Experimental.Rendering.Universal;
 
-public class DayNighManager : MonoBehaviour
+public class DayNightManager : MonoBehaviour
 {
     public Gradient lightColor;
     public float tick = 1;
@@ -25,6 +25,7 @@ public class DayNighManager : MonoBehaviour
     void Update()
     {
         timeGoes();
+        if (Input.GetKeyDown(KeyCode.Y)) days++;
     }
     private void changeColor()
     {
