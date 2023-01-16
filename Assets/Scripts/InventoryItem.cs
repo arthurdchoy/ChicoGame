@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInventoryItem 
+public interface InventoryItem 
 {
     int MaxStackSize { get; }
     string ItemName { get; }

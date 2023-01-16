@@ -38,7 +38,7 @@ public class FieldManager : MonoBehaviour
         }*/
     }
 
-    public void Interact(IInventoryItem item, Vector3Int gridPosition)
+    public void Interact(InventoryItem item, Vector3Int gridPosition)
     {
         if (fieldMap.GetTile(gridPosition))
         {
