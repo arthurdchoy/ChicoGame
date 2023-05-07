@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "SeedData", menuName = "New Seed")]
 
-public class SeedData : ScriptableObject, IInventoryItem
+public class SeedData : ScriptableObject, InventoryItem
 {
     public int MaxStackSize
     {
@@ -28,7 +28,7 @@ public class SeedData : ScriptableObject, IInventoryItem
         }
     }
 
-    public int maxStackSize;
+    public int maxStackSize = 64;
     public string itemName;
 
     public Sprite icon;

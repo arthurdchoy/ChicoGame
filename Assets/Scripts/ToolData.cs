@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "ToolData", menuName = "New Tool")]
 
-public class ToolData : ScriptableObject, IInventoryItem
+public class ToolData : ScriptableObject, InventoryItem
 {
     // Start is called before the first frame update
     public int MaxStackSize
