@@ -14,7 +14,6 @@ public class InventoryManager : MonoBehaviour
     {
         // for inserting items, inventory drag&drop feature
         fillEmptyList(NUM_SLOTS);
-        LogInventory();
 
     }
     
