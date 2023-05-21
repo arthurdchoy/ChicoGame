@@ -10,22 +10,21 @@ public class InventoryManager : MonoBehaviour
     // pos of item in list corresponds to their pos in inventory UI
     private List<(InventoryItem item, int amount)> itemList = new List<(InventoryItem item, int amount)>(NUM_SLOTS);
 
-    // list of starting items to add to inventory on game start
-    public List<(InventoryItem item, int amount)> startingItemList = new List<(InventoryItem item, int amount)>();
-
-    void Start()
+    void Awake()
     {
         // for inserting items, inventory drag&drop feature
-        for (int i = 0; i < NUM_SLOTS; i++)
+        fillEmptyList(NUM_SLOTS);
+
+    }
+    
+    public void fillEmptyList(int numSlots)
+    {
+        for (int i = 0; i < numSlots; i++)
         {
-            if(i < startingItemList.Count)
-            {
-                AddItem(startingItemList[i].item, startingItemList[i].amount);
-            }
             itemList.Add((null, 0));
         }
     }
-    
+
     // return true if item was added succesfully, false otherwise   (also return false if some stackable items are left out due to full inventory)
     public bool AddItem(InventoryItem newItem, int amount)
     {
@@ -126,9 +125,15 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public (InventoryItem item, int amount) GetItemAt(int index)
+    
+    public InventoryItem GetItemAt(int index)
     {
-        return itemList[index];
+        return itemList[index].item;
+    }
+
+    public int GetAmountAt(int index)
+    {
+        return itemList[index].amount;
     }
 
     public int GetNumFilledSlots()
@@ -158,5 +163,20 @@ public class InventoryManager : MonoBehaviour
             }
         }
         return firstEmptySlot;
+    }
+
+    private void LogInventory()
+    {
+        for(int i = 0; i < NUM_SLOTS; i++)
+        {
+            if(itemList[i].item == null)
+            {
+                Debug.Log("NaN," + 0);
+            }
+            else
+            {
+                Debug.Log(itemList[i].item.ItemName + "," + itemList[i].amount);
+            }
+        }
     }
 }
