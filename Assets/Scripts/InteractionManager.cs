@@ -59,7 +59,7 @@ public class InteractionManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log(inventoryManager.GetNumFilledSlots() + " calling interact");
-            if (inventoryManager.GetNumFilledSlots() > 0) field.GetComponent<FieldManager>().Interact(inventoryManager.GetItemAt(currentItem).item, location);
+            //if (inventoryManager.GetNumFilledSlots() > 0) field.GetComponent<FieldManager>().Interact(inventoryManager.GetItemAt(currentItem).item, location);
         }
 
         //if(inventoryManager.GetNumFilledSlots() > 0) Debug.Log(inventoryManager.GetItemAt(currentItem).item.ItemName);

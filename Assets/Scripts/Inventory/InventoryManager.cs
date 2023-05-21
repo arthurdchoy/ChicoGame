@@ -126,9 +126,15 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public (InventoryItem item, int amount) GetItemAt(int index)
+    
+    public InventoryItem GetItemAt(int index)
     {
-        return itemList[index];
+        return itemList[index].item;
+    }
+
+    public int GetAmountAt(int index)
+    {
+        return itemList[index].amount;
     }
 
     public int GetNumFilledSlots()
@@ -158,5 +164,10 @@ public class InventoryManager : MonoBehaviour
             }
         }
         return firstEmptySlot;
+    }
+
+    private void LogInventory()
+    {
+
     }
 }
