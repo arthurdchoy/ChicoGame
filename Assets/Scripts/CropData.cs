@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "CropData", menuName = "New Crop")]
 
-public class CropData : ScriptableObject, IInventoryItem
+public class CropData : ScriptableObject, InventoryItem
 {
     public int MaxStackSize
     {
@@ -28,7 +28,7 @@ public class CropData : ScriptableObject, IInventoryItem
         }
     }
 
-    public int maxStackSize;
+    public int maxStackSize = 64;
     public string itemName;
 
     //public int growthTime;
