@@ -15,4 +15,6 @@ MonoBehaviour:
   itemName: Hoe
   icon: {fileID: 0}
   state: 0
+  itemType: 0
+  toolType: 3
   description: 

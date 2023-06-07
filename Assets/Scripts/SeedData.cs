@@ -2,43 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SeedData", menuName = "New Seed")]
 
-public class SeedData : ScriptableObject, InventoryItem
+[CreateAssetMenu(fileName = "SeedData", menuName = "Item/New Seed")]
+
+public class SeedData : InventoryItem
 {
-    public int MaxStackSize
+    private void Awake()
     {
-        get
-        {
-            return MaxStackSize;
-        }
+        maxStackSize = 64;
+        itemType = ItemType.SEED;
     }
-    public string ItemName
-    {
-        get
-        {
-            return itemName;
-        }
-    }
-    public string InternalName
-    {
-        get
-        {
-            return this.name;
-        }
-    }
-
-    public int maxStackSize = 64;
-    public string itemName;
-
-    public Sprite icon;
+    public bool reharvestable;
 
     public int buyPrice;
     public int sellPrice;
 
-    public string type;
-    public string description;
-
+    public int harvestAmount;
+    public int maxGrowthStage;
+    public int reharvestGrowthStage;
     public int[] growthStageTimes;
     public Sprite[] growthStageSprites;
+
+    public CropData crop;
+    public PlantType plantType;
+    public PlantSpecies plantSpecies;
 }

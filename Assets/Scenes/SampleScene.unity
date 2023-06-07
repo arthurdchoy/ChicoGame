@@ -4217,6 +4217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dayTracker: {fileID: 1565055248}
+  seed: {fileID: 0}
   age: 0
   growthStage: 0
 --- !u!212 &749342729
@@ -4891,6 +4892,7 @@ MonoBehaviour:
   fieldMap: {fileID: 1071062085}
   interactionCursor: {fileID: 1320902392}
   dayNightManager: {fileID: 1565055248}
+  playerInventory: {fileID: 1835151529}
   fieldSprites:
   - {fileID: -181702276914860018, guid: a819acf5d6dc04a4883dfd5acd2c3104, type: 3}
   - {fileID: -3387009454286128437, guid: a819acf5d6dc04a4883dfd5acd2c3104, type: 3}
@@ -5469,6 +5471,7 @@ MonoBehaviour:
   nightTime: 1200
   isday: 0
   days: 1
+  field: {fileID: 1071062086}
 --- !u!1 &1771444429
 GameObject:
   m_ObjectHideFlags: 0
@@ -5704,8 +5707,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d1896682693664089804de9db424b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingItems:
-  - {fileID: 11400000, guid: 227d241fd5975214d8149fe123d55969, type: 2}
-  - {fileID: 11400000, guid: d2cb78719d34d4e48a7e719db79af899, type: 2}
-  - {fileID: 11400000, guid: 9fd7e42d3b59c1b478558aed28296c36, type: 2}
-  - {fileID: 11400000, guid: f4da9a15333e5bf41a14119d722a27f4, type: 2}

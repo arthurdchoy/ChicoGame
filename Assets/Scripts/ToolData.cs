@@ -2,38 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ToolData", menuName = "New Tool")]
+[CreateAssetMenu(fileName = "ToolData", menuName = "Item/New Tool")]
 
-public class ToolData : ScriptableObject, InventoryItem
+public class ToolData : InventoryItem
 {
-    // Start is called before the first frame update
-    public int MaxStackSize
+    private void Awake()
     {
-        get
-        {
-            return maxStackSize;
-        }
+        maxStackSize = 1;
+        itemType = ItemType.TOOL;
     }
-    public string ItemName
-    {
-        get
-        {
-            return itemName;
-        }
-    }
-    public string InternalName
-    {
-        get
-        {
-            return this.name;
-        }
-    }
-
-    private int maxStackSize = 1;
-    public string itemName;
-
-    public Sprite icon;
     public int state;
-
-    public string description;
+    public ToolType toolType = ToolType.INVALID;
+}
+public enum ToolType
+{
+    INVALID,
+    AXE,
+    HAMMER,
+    HANDS,
+    HOE,
+    SHOVEL,
+    WATERINGCAN
 }

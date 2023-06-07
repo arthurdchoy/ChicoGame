@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62111a2af7955324e892a25fb8f1b4bd, type: 3}
   m_Name: blossom_weed
   m_EditorClassIdentifier: 
-  stackable: 1
-  growthTime: 0
-  progressSprites: []
-  matureSprite: {fileID: 0}
+  maxStackSize: 64
+  itemName: Blossom Weed
   icon: {fileID: 21300000, guid: e0f23b15f3708754d8cde11048ac87aa, type: 3}
   buyPrice: 0
-  sellPrice: 0
-  type: grain
+  sellPrice: 30
+  itemType: 0
+  plantType: 2
+  plant: 27
   description: 
-  crossbreed: []

@@ -9,28 +9,18 @@ public class PlantEntity : MonoBehaviour
 
     //public SpriteRenderer spriteRenderer;
 
+    public SeedData seed;
     public int age, growthStage;
     //public int[] growthStageTimes;
     //public Sprite[] growthStageSprites;
 
-    private void Start()
+    public void Initialize(SeedData inputSeed)
     {
+        seed = inputSeed;
         age = growthStage = 0;
-        //dayPlanted = dayTracker.days;
     }
 
-    private void Update()
-    {
-        /*age = dayTracker.days - dayPlanted;
-        for(int i = growthStage; i < growthStageTimes.Length; i++)
-        {
-            if (age >= growthStageTimes[i]) growthStage = i;
-        }
-
-        spriteRenderer.sprite = growthStageSprites[growthStage];*/
-    }
-
-    public IEnumerator StartGrowing(int dayPlanted, int[] growthStageTimes, Sprite[] growthStageSprites, SpriteRenderer spriteRenderer)
+    /*public IEnumerator StartGrowing(int dayPlanted, int[] growthStageTimes, Sprite[] growthStageSprites, SpriteRenderer spriteRenderer)
     {
         while (growthStage < growthStageSprites.Length - 1)
         {
@@ -43,5 +33,17 @@ public class PlantEntity : MonoBehaviour
             spriteRenderer.sprite = growthStageSprites[growthStage];
             yield return null;
         }
+    }
+    */
+
+    public void Grow(SpriteRenderer spriteRenderer)
+    {
+        age++;
+        for (int i = growthStage; i < seed.maxGrowthStage; i++)
+        {
+            if (age >= seed.growthStageTimes[i]) growthStage = i;
+        }
+
+        spriteRenderer.sprite = seed.growthStageSprites[growthStage];
     }
 }

@@ -2,46 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CropData", menuName = "New Crop")]
+[CreateAssetMenu(fileName = "CropData", menuName = "Item/New Crop")]
 
-public class CropData : ScriptableObject, InventoryItem
+public class CropData : InventoryItem
 {
-    public int MaxStackSize
+    private void Awake()
     {
-        get
-        {
-            return maxStackSize;
-        }
+        maxStackSize = 64;
+        itemType = ItemType.CROP;
     }
-    public string ItemName
-    {
-        get
-        {
-            return itemName;
-        }
-    }
-    public string InternalName
-    {
-        get
-        {
-            return this.name;
-        }
-    }
-
-    public int maxStackSize = 64;
-    public string itemName;
-
-    //public int growthTime;
-    //public Sprite[] progressSprites;
-    //public Sprite cropSprite;
-    public Sprite icon;
 
     public int buyPrice;
     public int sellPrice;
 
-    public string type;
-    public string description;
+    public PlantType plantType;
+    public PlantSpecies plantSpecies;
+
     //public string[] crossbreed;
-    
-    
 }

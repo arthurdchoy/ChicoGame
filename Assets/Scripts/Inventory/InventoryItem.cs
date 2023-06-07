@@ -2,9 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface InventoryItem 
+public enum ItemType
 {
-    int MaxStackSize { get; }
-    string ItemName { get; }
-    string InternalName { get; }
+    TOOL,
+    QUEST,
+    CROP,
+    SEED
+}
+public abstract class InventoryItem : ScriptableObject
+{
+    public int maxStackSize;
+    public string itemName;
+    [TextArea(20,15)]
+    public string description;
+    public ItemType itemType;
+    public Sprite icon;
 }

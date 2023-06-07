@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62111a2af7955324e892a25fb8f1b4bd, type: 3}
   m_Name: banana
   m_EditorClassIdentifier: 
-  stackable: 1
-  growthTime: 0
-  progressSprites: []
-  matureSprite: {fileID: 0}
+  maxStackSize: 64
+  itemName: Banana
   icon: {fileID: 21300000, guid: 5709b55743c1ac541953b5ced00149d2, type: 3}
-  buyPrice: 0
-  sellPrice: 0
-  type: fruit
+  buyPrice: 5
+  sellPrice: 10
+  itemType: 1
+  plantType: 1
+  plant: 10
   description: 
-  crossbreed: []
