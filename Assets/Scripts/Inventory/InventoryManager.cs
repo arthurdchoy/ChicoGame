@@ -37,18 +37,18 @@ public class InventoryManager : MonoBehaviour
         int firstEmptySlotIndex = GetFirstEmptySlot();
 
         // if item is stackable, find the first available slot, if none exist, add item to first empty slot
-        if (newItem.MaxStackSize > 1)
+        if (newItem.maxStackSize > 1)
         {
             for (int i = 0; i < NUM_SLOTS; i++)
             {
-                // slot if available if item names are the same AND the item currently is slot is not at maximum stack size
-                if (itemList[i].item.ItemName == newItem.ItemName && itemList[i].amount < itemList[i].item.MaxStackSize)
+                // slot if available if items are the same are the same AND the item currently in slot is not at maximum stack size
+                if (itemList[i].item == newItem && itemList[i].amount < itemList[i].item.maxStackSize)
                 {
                     // if adding the extra amount exceeds stack size, recursively call AddItem with the remaining amount
-                    if (itemList[i].amount + amount > itemList[i].item.MaxStackSize)
+                    if (itemList[i].amount + amount > itemList[i].item.maxStackSize)
                     {
-                        itemList[i] = (newItem, itemList[i].item.MaxStackSize);
-                        return AddItem(newItem, amount - (itemList[i].item.MaxStackSize - itemList[i].amount));
+                        itemList[i] = (newItem, itemList[i].item.maxStackSize);
+                        return AddItem(newItem, amount - (itemList[i].item.maxStackSize - itemList[i].amount));
                     }
                     else
                     {
@@ -61,11 +61,11 @@ public class InventoryManager : MonoBehaviour
 
         // item not stackable OR no available, stackable slot --> add to first empty slot
         // if adding amount exceeds stack size, recursively call AddItem with the remaining amount
-        if(amount > newItem.MaxStackSize)
+        if(amount > newItem.maxStackSize)
         {
-            itemList[firstEmptySlotIndex] = (newItem, newItem.MaxStackSize);
+            itemList[firstEmptySlotIndex] = (newItem, newItem.maxStackSize);
             slotsUsed++;
-            return AddItem(newItem, amount - newItem.MaxStackSize);
+            return AddItem(newItem, amount - newItem.maxStackSize);
         }
         else
         {
@@ -105,7 +105,7 @@ public class InventoryManager : MonoBehaviour
         int amountRemoved;
         for (int i = 0; i < NUM_SLOTS; i++)
         {
-            if (itemList[i].item.ItemName == item.ItemName)
+            if (itemList[i].item == item)
             {
                 if (amount < itemList[i].amount)
                 {
@@ -175,7 +175,7 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                Debug.Log(itemList[i].item.ItemName + "," + itemList[i].amount);
+                Debug.Log(itemList[i].item.itemName + "," + itemList[i].amount);
             }
         }
     }

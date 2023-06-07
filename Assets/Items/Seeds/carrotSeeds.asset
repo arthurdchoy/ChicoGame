@@ -14,13 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStackSize: 64
   itemName: Carrot Seeds
+  description: bless up
+  itemType: 3
   icon: {fileID: 0}
+  reharvestable: 0
   buyPrice: 0
   sellPrice: 0
-  type: seed
-  description: bless up
+  harvestAmount: 0
+  maxGrowthStage: 3
+  reharvestGrowthStage: 0
   growthStageTimes: 000000000300000005000000
   growthStageSprites:
   - {fileID: -890280540533619199, guid: 2afd5f5fa2196d642b3d160a1a93f06c, type: 3}
   - {fileID: 6679225720113002992, guid: 2afd5f5fa2196d642b3d160a1a93f06c, type: 3}
   - {fileID: 7159567688333451186, guid: 2afd5f5fa2196d642b3d160a1a93f06c, type: 3}
+  crop: {fileID: 11400000, guid: 229c28bfbf7a8124fb0ebd44d099c400, type: 2}
+  plantType: 0
+  plantSpecies: 0

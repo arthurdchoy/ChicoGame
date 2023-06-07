@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62111a2af7955324e892a25fb8f1b4bd, type: 3}
   m_Name: maple_pad
   m_EditorClassIdentifier: 
-  stackable: 1
-  growthTime: 0
-  progressSprites: []
-  matureSprite: {fileID: 0}
+  maxStackSize: 64
+  itemName: 
   icon: {fileID: 21300000, guid: d9d222fdf4110d34b97196db79e12d5a, type: 3}
   buyPrice: 0
   sellPrice: 0
-  type: 
+  itemType: 1
+  plantType: 0
+  plant: 0
   description: 
-  crossbreed: []

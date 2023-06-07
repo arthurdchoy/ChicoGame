@@ -15,4 +15,6 @@ MonoBehaviour:
   itemName: Hands
   icon: {fileID: 0}
   state: 0
+  itemType: 0
+  toolType: 2
   description: 

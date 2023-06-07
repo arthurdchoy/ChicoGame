@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62111a2af7955324e892a25fb8f1b4bd, type: 3}
   m_Name: carrot
   m_EditorClassIdentifier: 
-  stackable: 1
-  growthTime: 0
-  progressSprites: []
-  matureSprite: {fileID: 0}
+  maxStackSize: 64
+  itemName: 
   icon: {fileID: 21300000, guid: 20f210856bbfdf7439b1a4f5a6ca86c8, type: 3}
   buyPrice: 0
   sellPrice: 0
-  type: vegetable
+  itemType: 1
+  plantType: 0
+  plant: 0
   description: 
-  crossbreed: []

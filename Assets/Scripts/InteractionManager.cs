@@ -14,11 +14,6 @@ public class InteractionManager : MonoBehaviour
     private int currentItem = 0;
 
     public Vector3Int location; // Selection location
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

@@ -14,6 +14,9 @@ public class DayNightManager : MonoBehaviour
     public int nightTime = 1200;
     public bool isday = false;
     public int days = 1;
+
+    public FieldManager field;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +56,7 @@ public class DayNightManager : MonoBehaviour
         {
             mins = 0;
             days++;
+            field.DayPassed();
         }
     }
 }

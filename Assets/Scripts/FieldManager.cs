@@ -11,6 +11,8 @@ public class FieldManager : MonoBehaviour
     GameObject interactionCursor;
     [SerializeField]
     DayNightManager dayNightManager;
+    [SerializeField]
+    InventoryManager playerInventory;
 
     public Sprite[] fieldSprites;
 
@@ -18,8 +20,17 @@ public class FieldManager : MonoBehaviour
     public GameObject plantEntity;
 
     // Different field tile flags:
-    private enum TileFlags { BLOCKED, TILLED, WATERED, SOWED };
-    private Dictionary<Vector3Int, List<bool>> fieldTiles = new Dictionary<Vector3Int, List<bool>>();
+    private enum TileStates 
+    { 
+        STONEBLOCKED, 
+        WOODBLOCKED,
+        EMPTY,
+        TILLED,
+        WATEREDNOPLANT,
+        UNWATEREDPLANT,
+        WATEREDPLANT
+    };
+    private Dictionary<Vector3Int, TileStates> fieldTiles = new Dictionary<Vector3Int, TileStates>();
     private Dictionary<Vector3Int, GameObject> plants     = new Dictionary<Vector3Int, GameObject>();
 
 
@@ -44,155 +55,142 @@ public class FieldManager : MonoBehaviour
         {
             if (!fieldTiles.ContainsKey(gridPosition))
             {
-                fieldTiles.Add(gridPosition, new List<bool> { false, false, false, false });
+                fieldTiles.Add(gridPosition, TileStates.EMPTY);
             }
 
-            Debug.Log("Attempting to use " + item.ItemName);
+            Debug.Log("Attempting to use " + item.itemName);
 
-            if (item.ItemName == "Hoe" && empty(gridPosition)) HoeInteraction(gridPosition);
-            else if (item.ItemName == "Axe") AxeInteraction(gridPosition);
-            else if (item.ItemName == "Hammer" && !(watered(gridPosition) || sowed(gridPosition))) HammerInteraction(gridPosition);
-            else if (item.ItemName == "Shovel" && sowed(gridPosition)) ShovelInteraction(gridPosition);
-            else if (item.ItemName == "Watering Can" && tilled(gridPosition)) WateringCanInteraction(gridPosition);
-            else if (item is SeedData && tilled(gridPosition) && !sowed(gridPosition)) SeedInteraction(gridPosition, (SeedData)item);
-
-
-
-            if (empty(gridPosition))
-            {
-                fieldTiles.Remove(gridPosition);
-            }
+            fieldTiles[gridPosition] = TileInteractionUpdate(fieldTiles[gridPosition], item, gridPosition);
         }
     }
 
-    private void HammerInteraction(Vector3Int gridPosition)
+    private TileStates TileInteractionUpdate(TileStates state, InventoryItem item, Vector3Int gridPosition)
     {
-        Debug.Log("hammer interaction");
-        if (blocked(gridPosition)) unblock(gridPosition);
-        if(tilled(gridPosition))
+        ToolType tempToolType = ToolType.INVALID;
+        SeedData tempSeed = null;
+        if (item is ToolData temp1) { tempToolType = temp1.toolType; }
+        if (item is SeedData temp2) { tempSeed = temp2; }
+        // State Transitions
+        switch(state)
         {
-            dry(gridPosition);
-            flatten(gridPosition);
+            case TileStates.STONEBLOCKED:
+                if(tempToolType == ToolType.HAMMER)
+                {
+                    state = TileStates.EMPTY;
+                }
+                break;
+            case TileStates.WOODBLOCKED:
+                if(tempToolType == ToolType.AXE)
+                {
+                    state = TileStates.EMPTY;
+                }
+                break;
+            case TileStates.EMPTY:
+                if(tempToolType == ToolType.HOE)
+                {
+                    state = TileStates.TILLED;
+                }
+                break;
+            case TileStates.TILLED:
+                if(tempToolType == ToolType.HAMMER)
+                {
+                    state = TileStates.EMPTY;
+                }
+                else if(tempToolType == ToolType.WATERINGCAN)
+                {
+                    state = TileStates.WATEREDNOPLANT;
+                }
+                if(tempSeed != null)
+                {
+                    state = TileStates.UNWATEREDPLANT;
+                    
+                    GameObject instance = Instantiate(plantEntity, interactionCursor.transform.position, Quaternion.identity);
+                    instance.GetComponent<PlantEntity>().Initialize(tempSeed);
+                    plants.Add(gridPosition, instance);
+                }
+                break;
+            case TileStates.WATEREDNOPLANT:
+                if(tempToolType == ToolType.HAMMER)
+                {
+                    state = TileStates.EMPTY;
+                }
+                if(tempSeed != null)
+                {
+                    state = TileStates.WATEREDPLANT;
+
+                    GameObject instance = Instantiate(plantEntity, interactionCursor.transform.position, Quaternion.identity);
+                    instance.GetComponent<PlantEntity>().Initialize(tempSeed);
+                    plants.Add(gridPosition, instance);
+                }
+                break;
+            case TileStates.UNWATEREDPLANT:
+                if(tempToolType == ToolType.HANDS)
+                {
+                    PlantEntity tempPlant = plants[gridPosition].GetComponent<PlantEntity>();
+                    if(tempPlant.growthStage == tempPlant.seed.maxGrowthStage)
+                    {
+                        playerInventory.AddItem(tempPlant.seed.crop, tempPlant.seed.harvestAmount);
+                        plants.Remove(gridPosition);
+                        state = TileStates.EMPTY;
+                    }
+                }
+                if(tempToolType == ToolType.SHOVEL)
+                {
+                    PlantEntity tempPlant = plants[gridPosition].GetComponent<PlantEntity>();
+                    if(tempPlant.growthStage == tempPlant.seed.maxGrowthStage)
+                    {
+                        playerInventory.AddItem(tempPlant.seed.crop, tempPlant.seed.harvestAmount);
+                        plants.Remove(gridPosition);
+                    }
+                    else
+                    {
+                        playerInventory.AddItem(tempPlant.seed, 1);
+                        plants.Remove(gridPosition);
+                    }
+                    state = TileStates.EMPTY;
+                }
+                if(tempToolType == ToolType.WATERINGCAN)
+                {
+                    state = TileStates.WATEREDPLANT;
+                }
+                break;
+            case TileStates.WATEREDPLANT:
+                if (tempToolType == ToolType.HANDS)
+                {
+                    PlantEntity tempPlant = plants[gridPosition].GetComponent<PlantEntity>();
+                    if (tempPlant.growthStage == tempPlant.seed.maxGrowthStage)
+                    {
+                        playerInventory.AddItem(tempPlant.seed.crop, tempPlant.seed.harvestAmount);
+                        plants.Remove(gridPosition);
+                        state = TileStates.EMPTY;
+                    }
+                }
+                if (tempToolType == ToolType.SHOVEL)
+                {
+                    PlantEntity tempPlant = plants[gridPosition].GetComponent<PlantEntity>();
+                    if (tempPlant.growthStage == tempPlant.seed.maxGrowthStage)
+                    {
+                        playerInventory.AddItem(tempPlant.seed.crop, tempPlant.seed.harvestAmount);
+                        plants.Remove(gridPosition);
+                    }
+                    else
+                    {
+                        playerInventory.AddItem(tempPlant.seed, 1);
+                        plants.Remove(gridPosition);
+                    }
+                    state = TileStates.EMPTY;
+                }
+                break;
         }
-    }
+        return state;
+    } 
 
-    private void AxeInteraction(Vector3Int gridPosition)
+    public void DayPassed()
     {
-        unblock(gridPosition);
-    }
-
-    private void HandsInteraction(Vector3Int gridPosition)
-    {
-    }
-
-    private void HoeInteraction(Vector3Int gridPosition)
-    {
-        Debug.Log("hoe interaction");
-        till(gridPosition);
-    }
-
-    private void ShovelInteraction(Vector3Int gridPosition)
-    {
-        reap(gridPosition);
-        if(plants.ContainsKey(gridPosition))
+        foreach(KeyValuePair<Vector3Int, GameObject> i in plants)
         {
-            Destroy(plants[gridPosition], 0.0f);
-            plants.Remove(gridPosition);
+            GameObject temp = i.Value;
+            temp.GetComponent<PlantEntity>().Grow(temp.GetComponent<SpriteRenderer>());
         }
-
-        dry(gridPosition);
-    }
-
-    private void WateringCanInteraction(Vector3Int gridPosition)
-    {
-        Debug.Log("watering");
-        water(gridPosition);
-    }
-
-    private void SeedInteraction(Vector3Int gridPosition, SeedData seed)
-    {
-        Debug.Log("Seed interaction");
-        sow(gridPosition);
-        GameObject instance = Instantiate(plantEntity, interactionCursor.transform.position, Quaternion.identity);
-
-        StartCoroutine(instance.GetComponent<PlantEntity>().StartGrowing(dayNightManager.days, seed.growthStageTimes, seed.growthStageSprites, instance.GetComponent<SpriteRenderer>()));
-
-        if(!plants.ContainsKey(gridPosition)) plants.Add(gridPosition, instance);
-    }
-
-    /*
-     * FIELD FLAG ACCESSORS
-     */
-    bool blocked(Vector3Int gridPosition)
-    {
-        if (!fieldTiles.ContainsKey(gridPosition)) return false;
-        return fieldTiles[gridPosition][(int)TileFlags.BLOCKED];
-    }
-
-    bool tilled(Vector3Int gridPosition)
-    {
-        if (!fieldTiles.ContainsKey(gridPosition)) return false;
-        return fieldTiles[gridPosition][(int)TileFlags.TILLED];
-    }
-
-    bool watered(Vector3Int gridPosition)
-    {
-        if (!fieldTiles.ContainsKey(gridPosition)) return false;
-        return fieldTiles[gridPosition][(int)TileFlags.WATERED];
-    }
-
-    bool sowed(Vector3Int gridPosition)
-    {
-        if (!fieldTiles.ContainsKey(gridPosition)) return false;
-        return fieldTiles[gridPosition][(int)TileFlags.SOWED];
-    }
-
-    bool empty(Vector3Int gridPosition)
-    {
-        if (!fieldTiles.ContainsKey(gridPosition)) return true;
-        return !(blocked(gridPosition) ||
-                 tilled(gridPosition)  ||
-                 watered(gridPosition) ||
-                 sowed(gridPosition));
-    }
-
-    /*
-     * FIELD FLAG MODIFIERS
-     */
-    // BLOCKED FLAG
-    void block(Vector3Int gridPosition)
-    {
-        fieldTiles[gridPosition][(int)TileFlags.BLOCKED] = true;
-    }
-    void unblock(Vector3Int gridPosition)
-    {
-        fieldTiles[gridPosition][(int)TileFlags.BLOCKED] = false;
-    }
-    // TILLED FLAG
-    void till(Vector3Int gridPosition)
-    {
-        fieldTiles[gridPosition][(int)TileFlags.TILLED] = true;
-    }
-    void flatten(Vector3Int gridPosition)
-    {
-        fieldTiles[gridPosition][(int)TileFlags.TILLED] = false;
-    }
-    // WATERED FLAG
-    void water(Vector3Int gridPosition)
-    {
-        fieldTiles[gridPosition][(int)TileFlags.WATERED] = true;
-    }
-    void dry(Vector3Int gridPosition)
-    {
-        fieldTiles[gridPosition][(int)TileFlags.WATERED] = false;
-    }
-    // SOWED FLAG
-    void sow(Vector3Int gridPosition)
-    {
-        fieldTiles[gridPosition][(int)TileFlags.SOWED] = true;
-    }
-    void reap(Vector3Int gridPosition)
-    {
-        fieldTiles[gridPosition][(int)TileFlags.SOWED] = false;
     }
 }

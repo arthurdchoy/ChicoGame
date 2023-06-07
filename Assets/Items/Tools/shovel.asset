@@ -15,4 +15,6 @@ MonoBehaviour:
   itemName: Shovel
   icon: {fileID: 0}
   state: 0
+  itemType: 0
+  toolType: 4
   description: 
